@@ -14,9 +14,25 @@ public class DAOFactory {
 		return new SaleDAO();
 	}
 
-	public static iTicket createTicketDAO(){
+/*	public static iTicket createTicketDAO(){
 		return new TicketDAO();
 	}
-
+*/
+	public static iUserDAO createUserDAO(){
+		return new UserDAO();
+	}
+	public static iemployee createemployeeDAO(){
+		return new EmployeeDAO();
+	}
+	public static IScheduleDAO createScheduleDAO(){
+		return new ScheduleDAO();
+	}
+	public static iSake_itemDAO createSale_itemDAO(){
+		return new Sale_itemDAO();
+		
+	}
+	public static iSeatDAO createSeatDAO(){
+		return new SeatDAO();
+	}
 }
 

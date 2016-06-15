@@ -14,12 +14,14 @@ public class SaleDAO implements iSaleDAO {
 	@Override
 	public int insert(Sale sal) {
 		try {
-			String sql = "insert into studio(sale_time,sale_payment, sale_change, sale_type,sale_status )"
-					+ " values('" + sal.get_sale_time()
-					+ "', " + sal.get_payment()
-					+ ", "  + sal.get_change() 
-					+ ", " + sal.set_sale_status()
+			String sql = "insert into studio(emp_id,sale_time,sale_payment,sale_change, sale_type,sale_status )"
+					+ " values(" + sal.get_emp_ID()
+					+ ", '" + sal.get_sale_time()
+					+ "', " + sal.get_change() 
+					+ ", "  + sal.get_sale_type()
+					+ ", "  + sal.get_sale_status()
 					+ " );";
+			
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			ResultSet rst = db.getInsertObjectIDs(sql);
@@ -39,25 +41,21 @@ public class SaleDAO implements iSaleDAO {
 		
 	}
 
-	@Override
+	@Override   /*订单修改暂定只能修改订单状态，修改其它无意义*/
 	public int update(Sale sal) {
 		int rtn=0;
-		/*try {
-			String sql = "update sale set " + " studio_name ='"
-					+ stu.getName() + "', " + " studio_row_count = "
-					+ stu.getRowCount() + ", " + " studio_col_count = "
-					+ stu.getColCount() + ", " + " studio_introduction = '"
-					+ stu.getIntroduction() + "' ";
+		try {
+			String sql = "update sale set " + " sale_status = " +sal.get_sale_status();
                      
-			sql += " where studio_id = " + sal.getID();
-			System.out.println("studio_id : " + sal.getID());
+			sql += " where studio_id = " + sal.getID() + ";";
+			
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn =db.execCommand(sql);
 			db.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}*/
+		}
 		return rtn;
 	}
 
@@ -66,7 +64,7 @@ public class SaleDAO implements iSaleDAO {
 		int rtn=0;		
 		try{
 			String sql = "delete from sale ";
-			sql += " where sale_id = " + ID;
+			sql += " where sale_id = " + ID + ";";
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn=db.execCommand(sql);
@@ -76,16 +74,17 @@ public class SaleDAO implements iSaleDAO {
 		}
 		return rtn;	
 	}
+	
 
 	@Override          /*订票查询未确定，暂时不定*/
 	public List<Sale> select(String condt) {
-		List<Sale> stuList = null;
-		stuList=new LinkedList<Sale>();
+		List<Sale> salList = null;
+		salList=new LinkedList<Sale>();
 		try {
-			String sql = "select studio_id, studio_name, studio_row_count, studio_col_count, studio_introduction from studio ";
+			String sql = "select * from Sale ";
 			condt.trim();
 			if(!condt.isEmpty())
-				sql+= " where " + condt;
+				sql+= " where " + condt + ";";
 			DBUtil db = new DBUtil();
 			if(!db.openConnection()){
 				System.out.print("fail to connect database");
@@ -94,13 +93,14 @@ public class SaleDAO implements iSaleDAO {
 			ResultSet rst = db.execQuery(sql);
 			if (rst!=null) {
 				while(rst.next()){
-					Studio stu=new Studio();
-					stu.setID(rst.getInt("studio_id"));
-					stu.setName(rst.getString("studio_name"));
-					stu.setRowCount(rst.getInt("studio_row_count"));
-					stu.setColCount(rst.getInt("studio_col_count"));
-					stu.setIntroduction(rst.getString("studio_introduction"));
-				//	stuList.add(stu);
+					Sale sal=new Sale();
+					sal.setID(rst.getInt("sale_ID"));
+					sal.set_emp_ID(rst.getInt("emp_id"));
+					sal.set_sale_time(rst.getString("sale_time"));
+					sal.set_payment(rst.getDouble("sale_change"));
+					sal.set_sale_type(rst.getInt("sale_type"));
+					sal.set_sale_status(rst.getInt("sale_status"));
+					salList.add(sal);
 				}
 			}
 			db.close(rst);
@@ -112,8 +112,35 @@ public class SaleDAO implements iSaleDAO {
 			
 		}
 		
-		return stuList;
+		return salList;
 	}
+	
+	public int select_id(Sale stu){    /*交易ID查询根据售票员和售票的时间唯一确定*/
+		int id = 0;
+		try{
+		String sql = "select sale_ID from Sale " ;
+		
+		sql += "where emp_id  = " + stu.get_emp_ID() + "and  sale_time = " + stu.get_sale_time() + ";";
+		
+		DBUtil db = new DBUtil();
+		
+		if(!db.openConnection()){
+			System.out.print("db connect is failed\n");
+			return -1;
+		}
+		ResultSet rst = db.execQuery(sql);
+		rst.next();
+		id = rst.getInt("sale_ID");
+		db.close(rst);
+		db.close();
+		
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+		
 	}
+	
+}
 
 

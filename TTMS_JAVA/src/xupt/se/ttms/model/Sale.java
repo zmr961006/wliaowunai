@@ -83,7 +83,7 @@ public class Sale {
 		this.sale_status = status;
 		
 	}
-	public int set_sale_status(){
+	public int get_sale_status(){
 		
 		return sale_status;
 		

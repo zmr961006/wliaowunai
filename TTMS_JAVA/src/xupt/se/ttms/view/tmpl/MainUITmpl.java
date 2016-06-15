@@ -1,34 +1,25 @@
 package xupt.se.ttms.view.tmpl;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JButton;
 
-import xupt.se.ttms.view.sellticket.SellTicketUI;
-
-//import xupt.se.ttms.view.system.*;
-import xupt.se.ttms.service.LoginedUser;
-
-import xupt.se.ttms.view.system.*;
-import xupt.se.ttms.view.tmpl.TTNavigationController;
+import xupt.se.ttms.login.marge_login;
 
 
 
-public class MainUITmpl extends JFrame implements ActionListener {
+@SuppressWarnings("serial")
+public class MainUITmpl extends JFrame {
 
 	protected final JPanel contPan = new JPanel();
 	
 	public MainUITmpl() {
-		LoginedUserUI respanel = new LoginedUserUI();
+		marge_login respanel = new marge_login();
 		respanel.setBackground(Color.WHITE);
-		respanel.init();
 
 		TTNavigationController navigation = TTNavigationController
 				.getInstance();
@@ -39,29 +30,29 @@ public class MainUITmpl extends JFrame implements ActionListener {
 		navigation.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		navigation.setVisible(true);
 
-		JButton saleLogin = LoginedUserUI.getUserLogin();
-		saleLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ArrayList<String> ImagePath = new ArrayList<String>();
-				ImagePath.add("resource/image/动物城.jpeg");
-				ImagePath.add("resource/image/超人.jpg");
-				ImagePath.add("resource/image/钢铁侠.jpg");
-				ImagePath.add("resource/image/荒野.jpg");
-				ImagePath.add("resource/image/少林.jpg");
-
-				SellTicketUI demo7 = new SellTicketUI(ImagePath);
-				demo7.setBackground(Color.WHITE);
-				demo7.setBounds(0, 0, Basic.Width(),
-						Basic.Height());
-				TTNavigationController navigation = TTNavigationController
-						.getInstance();
-				navigation.pushViewController(demo7, true);
-			}
-		});
-
-		JButton collLogin = LoginedUserUI.getManageLogin();
-		collLogin.addActionListener(this);
+//		JButton saleLogin = LoginedUserUI.getUserLogin();
+//		saleLogin.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				ArrayList<String> ImagePath = new ArrayList<String>();
+//				ImagePath.add("resource/image/动物城.jpeg");
+//				ImagePath.add("resource/image/超人.jpg");
+//				ImagePath.add("resource/image/钢铁侠.jpg");
+//				ImagePath.add("resource/image/荒野.jpg");
+//				ImagePath.add("resource/image/少林.jpg");
+//
+//				SellTicketUI demo7 = new SellTicketUI(ImagePath);
+//				demo7.setBackground(Color.WHITE);
+//				demo7.setBounds(0, 0, Basic.Width(),
+//						Basic.Height());
+//				TTNavigationController navigation = TTNavigationController
+//						.getInstance();
+//				navigation.pushViewController(demo7, true);
+//			}
+//		});
+//
+//		JButton collLogin = LoginedUserUI.getManageLogin();
+//		collLogin.addActionListener(this);
 
 		HeadPanel headPanel = HeadPanel.getHeadPanel();
 		JButton userButton = headPanel.userButton;
@@ -79,18 +70,18 @@ public class MainUITmpl extends JFrame implements ActionListener {
 		new MainUITmpl();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		AdminModUI moviePanel = new AdminModUI();
-		moviePanel.setBackground(Color.WHITE);
-		moviePanel.setBounds(0, 0, Basic.Width(),
-				Basic.Height());
-
-		TTNavigationController navigation = TTNavigationController
-				.getInstance();
-		navigation.pushViewController(moviePanel, true);
-	}
+//	@Override
+//	public void actionPerformed(ActionEvent e) {
+//		// TODO Auto-generated method stub
+//		AdminModUI moviePanel = new AdminModUI();
+//		moviePanel.setBackground(Color.WHITE);
+//		moviePanel.setBounds(0, 0, Basic.Width(),
+//				Basic.Height());
+//
+//		TTNavigationController navigation = TTNavigationController
+//				.getInstance();
+//		navigation.pushViewController(moviePanel, true);
+//	}
 	
 	protected void initContent(){
 	}

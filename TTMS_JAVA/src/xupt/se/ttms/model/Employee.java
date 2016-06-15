@@ -9,6 +9,24 @@ public class Employee implements Serializable {
 	private String password;
 	private String cName;
 	private String tel;
+	private String addr;
+	private String email;
+	
+	public String get_email(){
+		return email;
+		
+	}
+	public void set_email(String email){
+		this.email = email;
+	}
+	
+	
+	public String get_addr(){
+		return addr;
+	}
+	public void set_addr(String addr){
+		this.addr = addr;
+	}
 	
 	public String getcName() {
 		return cName;
@@ -72,5 +90,7 @@ public class Employee implements Serializable {
 	public void showValue() {
 		System.out.println("编号：" + id + "\t姓名：" + name);
 	}
+	
+	
 
 }

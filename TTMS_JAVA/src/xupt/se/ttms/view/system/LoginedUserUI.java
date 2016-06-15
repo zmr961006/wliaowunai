@@ -12,51 +12,51 @@ import xupt.se.ttms.view.tmpl.*;
 
 @SuppressWarnings("serial")
 public class LoginedUserUI extends JPanel {
-	 private static JButton sale = new JButton();
+		private static JButton sale = new JButton();
 	    private static JButton coll = new JButton();
 
-	    public void init() {
+	    public LoginedUserUI() {
 	    	setLayout(null);
 	        CircleButton button=new CircleButton(null, new Color(216, 216, 216));
 	        button.setEnabled(false);
 	        button.setBounds(378, 95, 54, 54);
-	        add(button);
+	        this.add(button);
 	        
 	        ImageIcon saleIcon = new ImageIcon("resource/image/changePass.png");
 			sale.setIcon(saleIcon);
 			sale.setBorderPainted(false);
 			sale.setContentAreaFilled(false);
 			sale.setBounds(409 - 74, 1500 - 1152, 139, 31);
-			add(sale);
+			this.add(sale);
 			
 			ImageIcon collIcon = new ImageIcon("resource/image/collLogin.png");
 			coll.setIcon(collIcon);
 			coll.setBorderPainted(false);
 			coll.setContentAreaFilled(false);
 			coll.setBounds(409 - 74, 1545 - 1152, 139, 31);
-			add(coll);
+			this.add(coll);
 
 	        JLabel yh = new JLabel("用户名:");
 	        yh.setFont(new Font("Kaiti SC", 1, 13));
 	        yh.setBounds(351 - 74, 1355 - 1152, 50, 18);
 	        yh.setForeground(new Color(162, 157, 157));
-	        add(yh);
+	        this.add(yh);
 	        
 	        final RoundJTextField name = new RoundJTextField(17);
 	        name.setBounds(409 - 74, 1349 - 1152, 141, 24);
 	        name.setForeground(new Color(216, 216, 216));
-	        add(name);
+	        this.add(name);
 	        
 	        JLabel mm = new JLabel("密码:");
 	        mm.setFont(new Font("Kaiti SC", 1, 13));
 	        mm.setBounds(364 - 74, 1393 - 1152, 50, 18);
 	        mm.setForeground(new Color(162, 157, 157));
-	        add(mm);
+	        this.add(mm);
 	        
 	        final RoundPassTextField password = new RoundPassTextField(17);
 	        password.setBounds(409 - 74, 1387 - 1152, 141, 24);
 	        password.setForeground(new Color(216, 216, 216));
-	        add(password);
+	        this.add(password);
 	        
 	    /*    sale.addActionListener(new ActionListener() {
 	            public void actionPerformed(ActionEvent e) {

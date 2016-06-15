@@ -12,13 +12,12 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import xupt.se.ttms.view.tmpl.Basic;
 @SuppressWarnings("serial")
@@ -28,8 +27,6 @@ public class EditMoviePanel extends JPanel implements ActionListener {
 	private JScrollPane ediScrollPanel;
 	private JPanel ediConPanel;
 	private ArrayList<EditMovieButton> editMovieArray;
-	private JButton addPhotoButton;
-	private JFileChooser fileChooser = new JFileChooser();
 
 	public EditMoviePanel() {
 		setLayout(null);
@@ -41,23 +38,14 @@ public class EditMoviePanel extends JPanel implements ActionListener {
 	}
 
 	private void initButton() {
-		ImageIcon photoIcon = new ImageIcon(
-				"resource/image/addPhoto.png");
-		addPhotoButton = new JButton();
-		addPhotoButton.setIcon(photoIcon);
-		addPhotoButton.setBorderPainted(false);
-		addPhotoButton.setContentAreaFilled(false);
-		addPhotoButton.setBounds(0, 1, Basic.Width() / 5, 271);
-		addPhotoButton.addActionListener(this);
-		add(addPhotoButton);
 
 		ImageIcon addIcon = new ImageIcon(
 				"resource/image/plus.png");
 		CircleButton addMovieButton = new CircleButton(null, new Color(216,
 				216, 216));
 		addMovieButton.setIcon(addIcon);
-		addMovieButton.setBounds(Basic.Width() / 5 * 3 - 15, 275 - 35,
-				29, 29);
+		addMovieButton.setBounds(Basic.Width() / 2 - 15, 275 - 35, 29,
+				29);
 		addMovieButton.addActionListener(this);
 		add(addMovieButton);
 
@@ -68,13 +56,12 @@ public class EditMoviePanel extends JPanel implements ActionListener {
 		ediConPanel.setBackground(new Color(216, 216, 216));
 		ediConPanel.setLayout(null);
 		// 设置该属性，滚动条才可滚动
-		ediConPanel.setPreferredSize(new Dimension(
-				Basic.Width() / 5 * 4, 275 - 40));
+		ediConPanel.setPreferredSize(new Dimension(Basic.Width(),
+				275 - 40));
 
 		ediScrollPanel = new JScrollPane(ediConPanel);
 		ediScrollPanel.setBackground(new Color(216, 216, 216));
-		ediScrollPanel.setBounds(Basic.Width() / 5, 0,
-				Basic.Width() / 5 * 4, 275 - 40);
+		ediScrollPanel.setBounds(0, 0, Basic.Width(), 275 - 40);
 		// 去掉边框
 		ediScrollPanel.setBorder(new LineBorder(new Color(198, 193, 193)));
 
@@ -108,16 +95,16 @@ public class EditMoviePanel extends JPanel implements ActionListener {
 
 		for (int i = 0; i < editMovieArray.size(); i++) {
 			EditMovieButton ediButton = editMovieArray.get(i);
-			ediButton.setBounds(0, 51 * i, Basic.Width() / 5 * 4, 51);
+			ediButton.setBounds(0, 51 * i, Basic.Width(), 51);
 			ediConPanel.add(ediButton);
 		}
 		int height = 51 * editMovieArray.size();
 		if (height > 275 - 40) {
-			ediConPanel.setPreferredSize(new Dimension(
-					Basic.Width() / 5 * 4, height));
+			ediConPanel.setPreferredSize(new Dimension(Basic.Width(),
+					height));
 		} else {
-			ediConPanel.setPreferredSize(new Dimension(
-					Basic.Width() / 5 * 4, 275 - 40));
+			ediConPanel.setPreferredSize(new Dimension(Basic.Width(),
+					275 - 40));
 		}
 
 		ediConPanel.repaint();
@@ -136,14 +123,6 @@ public class EditMoviePanel extends JPanel implements ActionListener {
 		} else if (arg0.getSource() == nextButton) {
 			int jValue = ediScrollPanel.getVerticalScrollBar().getValue();
 			ediScrollPanel.getVerticalScrollBar().setValue(jValue += 55);
-		} else if (arg0.getSource() == addPhotoButton) {
-			FileNameExtensionFilter filter = new FileNameExtensionFilter(
-					"Allowed File", "jpg", "png");
-			fileChooser.setFileFilter(filter);
-			if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				setIcon(fileChooser.getSelectedFile().getAbsolutePath()
-						.toString(), addPhotoButton);
-			}
 		} else {
 			EditMovieButton movieButton = new EditMovieButton(this);
 			movieButton.setBackground(Color.WHITE);
@@ -172,12 +151,12 @@ class EditMovieButton extends JPanel implements ActionListener {
 	private RoundJTextField timer;
 	private RoundJTextField type;
 	private RoundJTextField room;
-	private RoundJTextField price;
+	private JLabel overTime;
 	private EditMoviePanel mainPanel;
 
 	public EditMovieButton(EditMoviePanel mainPanel) {
 		setLayout(null);
-		
+
 		this.mainPanel = mainPanel;
 
 		ImageIcon editIcon = new ImageIcon(
@@ -187,8 +166,7 @@ class EditMovieButton extends JPanel implements ActionListener {
 		editButton.setBorderPainted(false);
 		editButton.setContentAreaFilled(false);
 		editButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		editButton.setBounds(Basic.Width() / 5 * 4 - 130, 51 / 2 - 11,
-				54, 23);
+		editButton.setBounds(Basic.Width() - 130, 51 / 2 - 11, 54, 23);
 		editButton.addActionListener(this);
 		add(editButton);
 
@@ -199,21 +177,27 @@ class EditMovieButton extends JPanel implements ActionListener {
 		deleteButton.setBorderPainted(false);
 		deleteButton.setContentAreaFilled(false);
 		deleteButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		deleteButton.setBounds(Basic.Width() / 5 * 4 - 40,
-				51 / 2 - 10, 20, 20);
+		deleteButton
+				.setBounds(Basic.Width() - 40, 51 / 2 - 10, 20, 20);
 		deleteButton.addActionListener(this);
 		add(deleteButton);
 
 		timer = new RoundJTextField(10);
-		timer.setBounds(20, 51 / 2 - 11, 50, 22);
+		timer.setBounds(20, 51 / 2 - 11, 55, 22);
 		timer.setForeground(Color.LIGHT_GRAY);
-		timer.setText("时间段");
+		timer.setText("开始时间");
 		timer.setFont(new Font("Kaiti SC", 1, 10));
 		timer.setEnabled(false);
 		add(timer);
 
+		overTime = new JLabel("结束时间");
+		overTime.setBounds(100, 51 / 2 - 11, 55, 22);
+		overTime.setForeground(Color.GRAY);
+		overTime.setFont(new Font("Kaiti SC", 1, 10));
+		add(overTime);
+
 		type = new RoundJTextField(10);
-		type.setBounds(100, 51 / 2 - 11, 60, 22);
+		type.setBounds(190, 51 / 2 - 11, 60, 22);
 		type.setForeground(Color.LIGHT_GRAY);
 		type.setText("电影类型");
 		type.setFont(new Font("Kaiti SC", 1, 10));
@@ -221,20 +205,13 @@ class EditMovieButton extends JPanel implements ActionListener {
 		add(type);
 
 		room = new RoundJTextField(10);
-		room.setBounds(190, 51 / 2 - 11, 50, 22);
+		room.setBounds(270, 51 / 2 - 11, 55, 22);
 		room.setForeground(Color.LIGHT_GRAY);
 		room.setText("电影厅");
 		room.setFont(new Font("Kaiti SC", 1, 10));
 		room.setEnabled(false);
 		add(room);
 
-		price = new RoundJTextField(10);
-		price.setBounds(270, 51 / 2 - 11, 55, 22);
-		price.setForeground(Color.LIGHT_GRAY);
-		price.setText("电影价格");
-		price.setFont(new Font("Kaiti SC", 1, 10));
-		price.setEnabled(false);
-		add(price);
 	}
 
 	@Override
@@ -267,7 +244,6 @@ class EditMovieButton extends JPanel implements ActionListener {
 				timer.setEnabled(true);
 				type.setEnabled(true);
 				room.setEnabled(true);
-				price.setEnabled(true);
 				tag = true;
 			} else {
 				ImageIcon editIcon = new ImageIcon(
@@ -276,7 +252,6 @@ class EditMovieButton extends JPanel implements ActionListener {
 				timer.setEnabled(false);
 				type.setEnabled(false);
 				room.setEnabled(false);
-				price.setEnabled(false);
 				tag = false;
 			}
 		}

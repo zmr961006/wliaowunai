@@ -17,8 +17,8 @@ public class Sale_item {
 	public void set_sale_id(int id){
 		this.sale_id = id; 
 	}
-	public void set_sale_item_price(int prices){
-		this.sale_item_price = prices;
+	public void set_sale_item_price(double d){
+		this.sale_item_price = d;
 	}
 	
 	public int get_sale_item_id(){

@@ -14,14 +14,14 @@ public class PlayDAO implements iPlayDAO{
 	@Override
 	public int insert(Play ply) {
 		try {
-			String sql = "insert into play(play_name,play_introduction,play_image,play_ticket_price,play_status)"
+			String sql = "insert into play(play_name,play_introduction,play_image,play_ticket_price,play_status,play_length)"
 					+ " values( '"  + ply.getname()
 					+ "' , '" +ply.getIntroduction()
 					+ "' , '" +ply.getimage()
 					+ "' , " +ply.getprice()
 					+ ", " +ply.getstatus()
+					+ ", " +ply.getlength()
 					+ " );";
-			System.out.print(sql);
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			ResultSet rst = db.getInsertObjectIDs(sql);
@@ -45,13 +45,13 @@ public class PlayDAO implements iPlayDAO{
 		int rtn=0;
 		try {
 			String sql = "update play set " + " play_name ='"
-					+ ply.getname() + "', " + "  = "
-					+ ply.getlength() + ", " + " play_length = "
-					+ ply.getprice() + ", " + " play_ticket_price = '"
-					+ ply.getIntroduction() + "' ";
+					+ ply.getname() + "', " + "play_length = "
+					+ ply.getlength() + ", " + " play_ticket_price = "
+					+ ply.getprice() + ", " + " play_introduction = '"
+					+ ply.getIntroduction() + "'," + "play_image = '" 
+					+ ply.getimage() + "'";
 
-			sql += " where play_id = " + ply.getID();
-			System.out.println("studio_id : " + ply.getID());
+			sql += " where play_id = " + ply.getID() + ";";
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn =db.execCommand(sql);
@@ -69,7 +69,9 @@ public class PlayDAO implements iPlayDAO{
 		int rtn=0;		
 		try{
 			String sql = "delete from play ";
-			sql += " where play_id = " + ID;
+			sql += " where play_id = " + ID + ";";
+			
+			System.out.println(sql);
 			DBUtil db = new DBUtil();
 			db.openConnection();
 			rtn=db.execCommand(sql);
@@ -87,10 +89,15 @@ public class PlayDAO implements iPlayDAO{
 		List<Play> stuList = null;
 		stuList=new LinkedList<Play>();
 		try {
-			String sql = "select play_id, play_name, play_introduction, play_image, play_length play_ticket_price play_status from play ";
+			String sql = "select play_id, play_name, play_introduction, play_image, play_length, play_ticket_price, play_status from play ";
 			condt.trim();
-			if(!condt.isEmpty())
-				sql+= " where " + condt;
+			if(!condt.isEmpty()) {
+				sql+= " where " + condt + ";";
+			} else {
+				sql += ";";
+			}
+			
+			System.out.println(sql);
 			DBUtil db = new DBUtil();
 			if(!db.openConnection()){
 				System.out.print("fail to connect database");
@@ -122,10 +129,29 @@ public class PlayDAO implements iPlayDAO{
 		
 		return stuList;
 	}
+
+	@Override
+	public int select_id(Play stu) {
 		
-	
-	
-	
-	
-	
+		int id = -1;
+		try {
+			String sql = "select play_id  from play ";
+			
+			sql+= " where " + "play_name = '" + stu.getname() + "';" ;
+			DBUtil db = new DBUtil();
+			if(!db.openConnection()){
+				System.out.print("fail to connect database");
+				return -1;
+			}
+			ResultSet rst = db.execQuery(sql);
+			rst.next();
+			id = rst.getInt("play_id");
+			db.close(rst);
+			db.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return id;
+	}
+		
 }

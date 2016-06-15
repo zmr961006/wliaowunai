@@ -32,6 +32,10 @@ public class PlaySrv {
 		return plyDAO.select("");		
 	}
 	
+	public int getId(Play ply) {
+		return plyDAO.select_id(ply);
+	}
+	
 	
 	
 }

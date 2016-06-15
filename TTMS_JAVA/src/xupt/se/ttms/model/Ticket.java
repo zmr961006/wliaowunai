@@ -51,6 +51,7 @@ public class Ticket {
 	public void setTicket_date(String ticket_date) {
 		this.ticket_date = ticket_date;
 	}
+
 	public int getTicket_times() {
 		return ticket_times;
 	}
@@ -63,5 +64,11 @@ public class Ticket {
 	public void setTicket_sold(int ticket_sold) {
 		this.ticket_sold = ticket_sold;
 	}
-	
+	public void setTicket_locked(String time){
+		this.ticket_date = time;
+		
+	}
+	public String getTicket_locked(){
+		return ticket_date;
+	}
 }
